@@ -23,7 +23,8 @@
 
 #include "common_utils.h"
 #include "icu_ep.h"
-
+#include "elc_hal.h"
+#include "dtc_hal.h"
 
 /*******************************************************************************************************************//**
  * @addtogroup icu_ep
@@ -39,6 +40,7 @@ fsp_err_t adc_read_data(void);
 void adc_task(void);
 
 volatile bool b_ready_to_read = false;
+volatile bool b_ready_to_scan = false;
 uint16_t g_adc_data;
 
 static fsp_err_t adc_scan_start(void)
@@ -92,27 +94,11 @@ fsp_err_t adc_read_data(void)
 {
     fsp_err_t err = FSP_SUCCESS;     // Error status
 
-    err = R_ADC_Read (&g_adc_ctrl,ADC_CHANNEL_0, &g_adc_data);
+    err = R_ADC_Read (&g_adc_ctrl, ADC_CHANNEL_0, &g_adc_data);
     if (FSP_SUCCESS != err)
     {
         APP_ERR_PRINT("** R_ADC_Read API failed ** \r\n");
         return err;
-    }
-
-    if (ADC_MODE_SINGLE_SCAN == g_adc_cfg.mode)
-    {
-        b_ready_to_read = false;
-
-        /* Close the ADC module*/
-        err = R_ADC_Close (&g_adc_ctrl);
-
-        /* handle error */
-        if (FSP_SUCCESS != err)
-        {
-           APP_ERR_PRINT("** R_ADC_Close API failed ** \r\n");
-            return err;
-        }
-
     }
 
     return err;
@@ -160,6 +146,22 @@ void hal_entry(void)
         APP_ERR_TRAP(err);
     }
 
+    /* Initialize all the links in the Event Link Controller */
+    err = init_hal_elc(&g_elc_ctrl,&g_elc_cfg);
+    if(FSP_SUCCESS != err)
+    {
+        APP_ERR_PRINT("\r\n** init_hal_elc FAILED ** \r\n");
+        APP_ERR_TRAP(err);
+    }
+
+    /* Enable the operation of the Event Link Controller */
+    err = elc_enable(&g_elc_ctrl);
+    if(FSP_SUCCESS != err)
+    {
+        APP_ERR_PRINT("** R_ELC_Enable FAILED ** \r\n");
+        APP_ERR_TRAP(err);
+    }
+
     err = icu_enable();
     if(FSP_SUCCESS != err)
     {
@@ -169,13 +171,42 @@ void hal_entry(void)
     }
 
     err = R_GPT_Open(&g_timer_pwm_ctrl, &g_timer_pwm_cfg);
+    if (FSP_SUCCESS != err)
+    {
+        APP_ERR_PRINT("** R_GPT_Open FAILED ** \r\n");
+        return;
+    }
+
     err = R_GPT_Start(&g_timer_pwm_ctrl);
+    if (FSP_SUCCESS != err)
+    {
+        APP_ERR_PRINT("** R_GPT_Start FAILED ** \r\n");
+        return;
+    }
+
+    R_IOPORT_PinWrite(&g_ioport_ctrl, BSP_IO_PORT_02_PIN_05, BSP_IO_LEVEL_LOW);
+
+    err = adc_scan_start();
+    if (FSP_SUCCESS != err)
+    {
+        APP_ERR_PRINT("** adc_scan_start FAILED ** \r\n");
+        return;
+    }
 
     /* Main loop */
     while (true)
     {
-        APP_PRINT("\r\n_adc_data %d\r\n", g_adc_data);
-        R_BSP_SoftwareDelay(100, BSP_DELAY_UNITS_MILLISECONDS);
+        if (b_ready_to_scan == true)
+        {
+            err = adc_read_data();
+            if (FSP_SUCCESS != err)
+            {
+                APP_ERR_PRINT("** adc_read_data FAILED ** \r\n");
+                APP_ERR_TRAP(err);
+            }
+            b_ready_to_scan = false;
+            APP_PRINT("\r\n_adc_data %d\r\n", g_adc_data);
+        }
     }
 }
 
@@ -206,20 +237,21 @@ void R_BSP_WarmStart(bsp_warm_start_event_t event) {
 
 void adc_callback(adc_callback_args_t *p_args)
 {
-    APP_PRINT("** adc_callback Trigger ** \r\n");
+    /* APP_PRINT("** adc_callback Trigger ** \r\n"); */
 
     switch(p_args->event)
     {
         case ADC_EVENT_SCAN_COMPLETE:
         {
-            APP_PRINT("** ADC_EVENT_SCAN_COMPLETE ** \r\n");
+            /* APP_PRINT("** ADC_EVENT_SCAN_COMPLETE ** \r\n"); */
             /*do nothing*/
+            b_ready_to_scan = true;
         }
         break;
 
         case ADC_EVENT_CONVERSION_COMPLETE:
         {
-            APP_PRINT("** ADC_EVENT_CONVERSION_COMPLETE ** \r\n");
+            /* APP_PRINT("** ADC_EVENT_CONVERSION_COMPLETE ** \r\n"); */
             /*do nothing*/
         }
         break;
