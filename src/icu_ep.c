@@ -101,7 +101,6 @@ void icu_deinit(void)
 void irq7_ep_callback(external_irq_callback_args_t *p_args)
 {
     /* APP_PRINT("\r\nirq7_ep_callback\r\n"); */
-    adc_task();
 
 }
 
