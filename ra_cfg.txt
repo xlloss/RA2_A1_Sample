@@ -75,7 +75,7 @@ FSP Configuration
     Clock Src: HOCO
     ICLK Div /1
     PCLKB Div /2
-    PCLKD Div /1
+    PCLKD Div /2
     FCLK Div /2
     SDADCCLK Src: HOCO
     SDADCCLK Div /12
@@ -139,7 +139,7 @@ FSP Configuration
       P914 19 USB_FS0_DP - - - "Peripheral mode" - - "USB_FS0: DP" - IO - - 
       P915 18 USB_FS0_DM - - - "Peripheral mode" - - "USB_FS0: DM" - IO - - 
       RES# 25 SYSTEM0_RES - - - - - - - - IO "Read only" - 
-      SBIAS/VREFI 38 "SDADC0_SBIAS / SDADC0_VREFI" - - - - - - - - IO "Read only" - 
+      SBIAS/VREFI 38 "SDADC0_VREFI / SDADC0_SBIAS" - - - - - - - - IO "Read only" - 
       VCC 11 SYSTEM0_VCC - - - - - - - - IO "Read only" - 
       VCCUSB 20 USB_FS0_VCC - - - - - - - - IO "Read only" - 
       VCCUSBLDO 21 USB_FS0_VCCLDO - - - - - - - - IO "Read only" - 
@@ -205,7 +205,7 @@ FSP Configuration
       P914 19 - - - - Disabled - - "USB_FS0: DP" - IO - - 
       P915 18 - - - - Disabled - - "USB_FS0: DM" - IO - - 
       RES# 25 SYSTEM0_RES - - - - - - - - IO "Read only" - 
-      SBIAS/VREFI 38 "SDADC0_SBIAS / SDADC0_VREFI" - - - - - - - - IO "Read only" - 
+      SBIAS/VREFI 38 "SDADC0_VREFI / SDADC0_SBIAS" - - - - - - - - IO "Read only" - 
       VCC 11 SYSTEM0_VCC - - - - - - - - IO "Read only" - 
       VCCUSB 20 USB_FS0_VCC - - - - - - - - IO "Read only" - 
       VCCUSBLDO 21 USB_FS0_VCCLDO - - - - - - - - IO "Read only" - 
@@ -235,6 +235,13 @@ FSP Configuration
   Module "ADC (r_adc)"
     Parameter Checking: Default (BSP)
     
+  Module "Event Link Controller (r_elc)"
+    Parameter Checking: Default (BSP)
+    
+  Module "Transfer (r_dtc)"
+    Parameter Checking: Default (BSP)
+    Linker section to keep DTC vector table: .fsp_dtc_vector_table
+    
   HAL
     Instance "g_ioport I/O Port (r_ioport)"
       Name: g_ioport
@@ -249,9 +256,9 @@ FSP Configuration
       Channel: 7
       Trigger: Rising
       Digital Filtering: Enabled
-      Digital Filtering Sample Clock (Only valid when Digital Filtering is Enabled): PCLK / 64
-      Callback: irq7_ep_callback
-      Pin Interrupt Priority: Priority 0 (highest)
+      Digital Filtering Sample Clock (Only valid when Digital Filtering is Enabled): PCLK / 1
+      Callback: NULL
+      Pin Interrupt Priority: Priority 1
       
     Instance "g_timer_pwm Timer, General PWM (r_gpt)"
       General: Name: g_timer_pwm
@@ -311,7 +318,7 @@ FSP Configuration
       General: Double-trigger: Disabled
       Input: Channel Scan Mask (channel availability varies by MCU): Channel 0, Channel 1
       Input: Group B Scan Mask (channel availability varies by MCU): 
-      Interrupts: Normal/Group A Trigger: Software
+      Interrupts: Normal/Group A Trigger: ICU IRQ7 (External pin interrupt 7)
       Interrupts: Group B Trigger: Disabled
       Interrupts: Group Priority (Valid only in Group Scan Mode): Group A cannot interrupt Group B
       Input: Add/Average Count: Disabled
@@ -332,9 +339,26 @@ FSP Configuration
       Input: Window Compare: Window B: Lower Reference: 0
       Input: Window Compare: Window B: Upper Reference: 0
       Interrupts: Callback: adc_callback
-      Interrupts: Scan End Interrupt Priority: Priority 0 (highest)
+      Interrupts: Scan End Interrupt Priority: Priority 2
       Interrupts: Scan End Group B Interrupt Priority: Disabled
       Interrupts: Window Compare A Interrupt Priority: Disabled
       Interrupts: Window Compare B Interrupt Priority: Disabled
       Extra: ADC Ring Buffer: Not Supported
+      
+    Instance "g_elc Event Link Controller (r_elc)"
+      Name: g_elc
+      
+    Instance "g_transfer_adc Transfer (r_dtc) ADC0 SCAN END (A/D scan end interrupt)"
+      Name: g_transfer_adc
+      Mode: Normal
+      Transfer Size: 2 Bytes
+      Destination Address Mode: Fixed
+      Source Address Mode: Fixed
+      Repeat Area (Unused in Normal Mode): Source
+      Destination Pointer: NULL
+      Source Pointer: NULL
+      Interrupt Frequency: After all transfers have completed
+      Number of Transfers: 1
+      Number of Blocks (Valid only in Block Mode): 0
+      Activation Source: ADC0 SCAN END (A/D scan end interrupt)
       
