@@ -94,13 +94,17 @@ fsp_err_t adc_read_data(void)
 {
     fsp_err_t err = FSP_SUCCESS;     // Error status
 
+    R_IOPORT_PinWrite(&g_ioport_ctrl, BSP_IO_PORT_02_PIN_05, BSP_IO_LEVEL_LOW);
     err = R_ADC_Read (&g_adc_ctrl, ADC_CHANNEL_0, &g_adc_data);
+    R_IOPORT_PinWrite(&g_ioport_ctrl, BSP_IO_PORT_02_PIN_05, BSP_IO_LEVEL_HIGH);
+
     if (FSP_SUCCESS != err)
     {
         APP_ERR_PRINT("** R_ADC_Read API failed ** \r\n");
         return err;
     }
 
+    R_IOPORT_PinWrite(&g_ioport_ctrl, BSP_IO_PORT_02_PIN_05, BSP_IO_LEVEL_LOW);
     return err;
 }
 
