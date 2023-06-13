@@ -107,7 +107,7 @@ FSP Configuration
       P107 41 - - - - Disabled - - "ADC0: AN23; SDADC0: ANSDN3" - None - - 
       P108 33 DEBUG0_SWDIO - Low - "Peripheral mode" - None "DEBUG0: SWDIO" - IO - - 
       P109 64 - - - - Disabled - - "ACMP(0-1): VCOUT; ACMPLP0: CMPREF; ADC0: ADTRG; AGT0: AGTOA; CTSU0: TS17; GPT_POEG1: GTETRG; GPT1: GTIOCB; ICU0: IRQ03; IIC1: SCL; KINT0: KRM1; SCI0: SCK; SCI9: SDA; SCI9: TXD; SPI0: MISO" - None - - 
-      P110 34 - - - - Disabled - - "ACMPLP1: CMPREF; ADC0: ADTRG; AGT0: AGTOB; CAN0: CTX; CGC0: CLKOUT; CTSU0: TSCAP; GPT_OPS0: GTOWLO; GPT2: GTIOCB; ICU0: IRQ02; IIC1: SDA; SCI0: SDA; SCI0: TXD; SCI9: RXD; SCI9: SCL; SPI0: RSPCK" - None - - 
+      P110 34 ADC0_ADTRG - Low None "Peripheral mode" CMOS None "ACMPLP1: CMPREF; ADC0: ADTRG; AGT0: AGTOB; CAN0: CTX; CGC0: CLKOUT; CTSU0: TSCAP; GPT_OPS0: GTOWLO; GPT2: GTIOCB; ICU0: IRQ02; IIC1: SDA; SCI0: SDA; SCI0: TXD; SCI9: RXD; SCI9: SCL; SPI0: RSPCK" - IO - - 
       P111 35 SPI0_RSPCK - Low None "Peripheral mode" CMOS None "CTSU0: TS14; ICU0: IRQ06; IIC1: SCL; RTC0: RTCOUT; SPI0: RSPCK" - IO - - 
       P112 36 SPI0_SSL0 - Low None "Peripheral mode" CMOS None "CGC0: CLKOUT; CTSU0: TSCAP; ICU0: IRQ07; IIC1: SDA; SPI0: SSL0" - IO - - 
       P200 27 - - - - Disabled - - "ICU0: NMI" - None - - 
@@ -133,13 +133,13 @@ FSP Configuration
       P409 14 ICU0_IRQ07 - - IRQ07 "IRQ mode" - None "AGT1: AGTO; CAN0: CTX; CTSU0: TSCAP; GPT0: GTIOCA; ICU0: IRQ07; IIC0: SCL; SCI0: SCK; SCI1: CTS; SPI0: SSL1" - IO - - 
       P410 13 - - - - Disabled - - "CTSU0: TS05; GPT5: GTIOCB; SCI0: CTS; SCI1: SDA; SCI1: TXD; SPI0: SSL2" - None - - 
       P411 12 SCI0_TXD - Low - "Peripheral mode" CMOS None "CTSU0: TS04; GPT5: GTIOCA; SCI0: SDA; SCI0: TXD; SCI1: RXD; SCI1: SCL; SPI0: SSL3" - IO - - 
-      P500 49 - - - - Disabled - - "ACMPHS0: IVCMP; ADC0: AN00; CTSU0: TS24; DAC0: DA; GPT5: GTIOCA; ICU0: IRQ03; OPAMP0: AMP+; SCI0: RXD; SCI0: SCL" - None - - 
-      P501 50 - - - - Disabled - - "ACMPHS0: IVREF; ADC0: AN01; CTSU0: TS25; GPT5: GTIOCB; ICU0: IRQ02; OPAMP0: AMP-; SCI0: SDA; SCI0: TXD" - None - - 
+      P500 49 ADC0_AN00 - - - "Analog mode" - None "ACMPHS0: IVCMP; ADC0: AN00; CTSU0: TS24; DAC0: DA; GPT5: GTIOCA; ICU0: IRQ03; OPAMP0: AMP+; SCI0: RXD; SCI0: SCL" - IO - - 
+      P501 50 ADC0_AN01 - - - "Analog mode" - None "ACMPHS0: IVREF; ADC0: AN01; CTSU0: TS25; GPT5: GTIOCB; ICU0: IRQ02; OPAMP0: AMP-; SCI0: SDA; SCI0: TXD" - IO - - 
       P502 51 - - - - Disabled - - "ADC0: AN02; ICU0: IRQ01; OPAMP0: AMPO; SCI0: CTS" - None - - 
       P914 19 USB_FS0_DP - - - "Peripheral mode" - - "USB_FS0: DP" - IO - - 
       P915 18 USB_FS0_DM - - - "Peripheral mode" - - "USB_FS0: DM" - IO - - 
       RES# 25 SYSTEM0_RES - - - - - - - - IO "Read only" - 
-      SBIAS/VREFI 38 "SDADC0_VREFI / SDADC0_SBIAS" - - - - - - - - IO "Read only" - 
+      SBIAS/VREFI 38 "SDADC0_SBIAS / SDADC0_VREFI" - - - - - - - - IO "Read only" - 
       VCC 11 SYSTEM0_VCC - - - - - - - - IO "Read only" - 
       VCCUSB 20 USB_FS0_VCC - - - - - - - - IO "Read only" - 
       VCCUSBLDO 21 USB_FS0_VCCLDO - - - - - - - - IO "Read only" - 
@@ -173,7 +173,7 @@ FSP Configuration
       P107 41 - - - - Disabled - - "ADC0: AN23; SDADC0: ANSDN3" - None - - 
       P108 33 DEBUG0_SWDIO - Low - "Peripheral mode" - None "DEBUG0: SWDIO" - IO - - 
       P109 64 - - - - Disabled - - "ACMP(0-1): VCOUT; ACMPLP0: CMPREF; ADC0: ADTRG; AGT0: AGTOA; CTSU0: TS17; GPT_POEG1: GTETRG; GPT1: GTIOCB; ICU0: IRQ03; IIC1: SCL; KINT0: KRM1; SCI0: SCK; SCI9: SDA; SCI9: TXD; SPI0: MISO" - None - - 
-      P110 34 - - - - Disabled - - "ACMPLP1: CMPREF; ADC0: ADTRG; AGT0: AGTOB; CAN0: CTX; CGC0: CLKOUT; CTSU0: TSCAP; GPT_OPS0: GTOWLO; GPT2: GTIOCB; ICU0: IRQ02; IIC1: SDA; SCI0: SDA; SCI0: TXD; SCI9: RXD; SCI9: SCL; SPI0: RSPCK" - None - - 
+      P110 34 - - Low None Disabled CMOS None "ACMPLP1: CMPREF; ADC0: ADTRG; AGT0: AGTOB; CAN0: CTX; CGC0: CLKOUT; CTSU0: TSCAP; GPT_OPS0: GTOWLO; GPT2: GTIOCB; ICU0: IRQ02; IIC1: SDA; SCI0: SDA; SCI0: TXD; SCI9: RXD; SCI9: SCL; SPI0: RSPCK" - IO - - 
       P111 35 - - Low None Disabled CMOS None "CTSU0: TS14; ICU0: IRQ06; IIC1: SCL; RTC0: RTCOUT; SPI0: RSPCK" - IO - - 
       P112 36 - - Low None Disabled CMOS None "CGC0: CLKOUT; CTSU0: TSCAP; ICU0: IRQ07; IIC1: SDA; SPI0: SSL0" - IO - - 
       P200 27 - - - - Disabled - - "ICU0: NMI" - None - - 
@@ -199,13 +199,13 @@ FSP Configuration
       P409 14 - - - None Disabled - None "AGT1: AGTO; CAN0: CTX; CTSU0: TSCAP; GPT0: GTIOCA; ICU0: IRQ07; IIC0: SCL; SCI0: SCK; SCI1: CTS; SPI0: SSL1" - IO - - 
       P410 13 - - - - Disabled - - "CTSU0: TS05; GPT5: GTIOCB; SCI0: CTS; SCI1: SDA; SCI1: TXD; SPI0: SSL2" - None - - 
       P411 12 - - Low - Disabled CMOS None "CTSU0: TS04; GPT5: GTIOCA; SCI0: SDA; SCI0: TXD; SCI1: RXD; SCI1: SCL; SPI0: SSL3" - IO - - 
-      P500 49 - - - - Disabled - - "ACMPHS0: IVCMP; ADC0: AN00; CTSU0: TS24; DAC0: DA; GPT5: GTIOCA; ICU0: IRQ03; OPAMP0: AMP+; SCI0: RXD; SCI0: SCL" - None - - 
-      P501 50 - - - - Disabled - - "ACMPHS0: IVREF; ADC0: AN01; CTSU0: TS25; GPT5: GTIOCB; ICU0: IRQ02; OPAMP0: AMP-; SCI0: SDA; SCI0: TXD" - None - - 
+      P500 49 - - - - Disabled - None "ACMPHS0: IVCMP; ADC0: AN00; CTSU0: TS24; DAC0: DA; GPT5: GTIOCA; ICU0: IRQ03; OPAMP0: AMP+; SCI0: RXD; SCI0: SCL" - IO - - 
+      P501 50 - - - - Disabled - None "ACMPHS0: IVREF; ADC0: AN01; CTSU0: TS25; GPT5: GTIOCB; ICU0: IRQ02; OPAMP0: AMP-; SCI0: SDA; SCI0: TXD" - IO - - 
       P502 51 - - - - Disabled - - "ADC0: AN02; ICU0: IRQ01; OPAMP0: AMPO; SCI0: CTS" - None - - 
       P914 19 - - - - Disabled - - "USB_FS0: DP" - IO - - 
       P915 18 - - - - Disabled - - "USB_FS0: DM" - IO - - 
       RES# 25 SYSTEM0_RES - - - - - - - - IO "Read only" - 
-      SBIAS/VREFI 38 "SDADC0_VREFI / SDADC0_SBIAS" - - - - - - - - IO "Read only" - 
+      SBIAS/VREFI 38 "SDADC0_SBIAS / SDADC0_VREFI" - - - - - - - - IO "Read only" - 
       VCC 11 SYSTEM0_VCC - - - - - - - - IO "Read only" - 
       VCCUSB 20 USB_FS0_VCC - - - - - - - - IO "Read only" - 
       VCCUSBLDO 21 USB_FS0_VCCLDO - - - - - - - - IO "Read only" - 
@@ -251,7 +251,7 @@ FSP Configuration
       Digital Filtering: Enabled
       Digital Filtering Sample Clock (Only valid when Digital Filtering is Enabled): PCLK / 64
       Callback: irq7_ep_callback
-      Pin Interrupt Priority: Priority 2
+      Pin Interrupt Priority: Priority 0 (highest)
       
     Instance "g_timer_pwm Timer, General PWM (r_gpt)"
       General: Name: g_timer_pwm
@@ -309,7 +309,7 @@ FSP Configuration
       General: Clear after read: On
       General: Mode: Single Scan
       General: Double-trigger: Disabled
-      Input: Channel Scan Mask (channel availability varies by MCU): Channel 6
+      Input: Channel Scan Mask (channel availability varies by MCU): Channel 0, Channel 1
       Input: Group B Scan Mask (channel availability varies by MCU): 
       Interrupts: Normal/Group A Trigger: Software
       Interrupts: Group B Trigger: Disabled
@@ -331,8 +331,8 @@ FSP Configuration
       Input: Window Compare: Window B: Comparison mode: Less Than or Outside Window
       Input: Window Compare: Window B: Lower Reference: 0
       Input: Window Compare: Window B: Upper Reference: 0
-      Interrupts: Callback: NULL
-      Interrupts: Scan End Interrupt Priority: Disabled
+      Interrupts: Callback: adc_callback
+      Interrupts: Scan End Interrupt Priority: Priority 0 (highest)
       Interrupts: Scan End Group B Interrupt Priority: Disabled
       Interrupts: Window Compare A Interrupt Priority: Disabled
       Interrupts: Window Compare B Interrupt Priority: Disabled
