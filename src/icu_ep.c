@@ -29,9 +29,8 @@
  * @{
  **********************************************************************************************************************/
 
-/* Boolean flag to determine switch is pressed or not.*/
-volatile bool g_sw_press = false;
-extern void ADC_Task(void);
+extern void adc_task(void);
+
 /*******************************************************************************************************************//**
  * @brief       This functions initializes ICU module.
  * @param[IN]   None
@@ -101,15 +100,9 @@ void icu_deinit(void)
  **********************************************************************************************************************/
 void irq7_ep_callback(external_irq_callback_args_t *p_args)
 {
-    /* Make sure it's the right interrupt*/
-   // fsp_err_t err                           = FSP_SUCCESS;
-  //  if(USER_SW_IRQ_NUMBER == p_args->channel)
-    //{
-  //  R_BSP_PinWrite(BSP_IO_PORT_02_PIN_05, BSP_IO_LEVEL_HIGH);
-        g_sw_press = true;
-  //  R_BSP_PinWrite(BSP_IO_PORT_02_PIN_05, BSP_IO_LEVEL_LOW);
-   // }
-        ADC_Task();
+    /* APP_PRINT("\r\nirq7_ep_callback\r\n"); */
+    adc_task();
+
 }
 
 /*******************************************************************************************************************//**
