@@ -114,7 +114,7 @@
     <node id="board.clock.iclk.display" option="board.clock.iclk.display.value"/>
     <node id="board.clock.pclkb.div" option="board.clock.pclkb.div.2"/>
     <node id="board.clock.pclkb.display" option="board.clock.pclkb.display.value"/>
-    <node id="board.clock.pclkd.div" option="board.clock.pclkd.div.1"/>
+    <node id="board.clock.pclkd.div" option="board.clock.pclkd.div.2"/>
     <node id="board.clock.pclkd.display" option="board.clock.pclkd.display.value"/>
     <node id="board.clock.fclk.div" option="board.clock.fclk.div.2"/>
     <node id="board.clock.fclk.display" option="board.clock.fclk.display.value"/>
